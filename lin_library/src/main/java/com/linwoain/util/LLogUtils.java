@@ -10,9 +10,6 @@ import android.util.Log;
  */
 public class LLogUtils {
 
-    private static final String PRE_STRING = "";
-    // "~~\n------------------------------------------------------------------\n";
-    private static final String AFTER_STRING = "";
     private static final String TAG = "linwoain";
     /**
      * 设置日志输出是否生效
@@ -40,7 +37,7 @@ public class LLogUtils {
      */
     public static void log() {
         if (enable) {
-            Log.i(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + AFTER_STRING);
+            Log.i(null == tag ? TAG : tag, getTagfromCaller(getCall()));
         }
     }
 
@@ -64,45 +61,54 @@ public class LLogUtils {
 
     public static void i(String text) {
         if (enable) {
-            Log.i(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + text + AFTER_STRING);
+            Log.i(null == tag ? TAG : tag, getTagfromCaller(getCall()) + text);
+        }
+    }
+
+    /**
+     * 显示日志
+     *
+     * @param text    要大于的日志
+     * @param showPos 是否显示位置信息
+     */
+    public static void i(String text, boolean showPos) {
+        if (enable) {
+            Log.i(null == tag ? TAG : tag, showPos ? getTagfromCaller(getCall()) : "" + text);
         }
     }
 
     public static void d(String text) {
         if (enable) {
-            Log.d(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + text + AFTER_STRING);
+            Log.d(null == tag ? TAG : tag, getTagfromCaller(getCall()) + text);
         }
     }
 
     public static void v(String text) {
         if (enable) {
-            Log.v(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + text + AFTER_STRING);
+            Log.v(null == tag ? TAG : tag, getTagfromCaller(getCall()) + text);
         }
     }
 
     public static void w(String text) {
         if (enable) {
-            Log.w(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + text + AFTER_STRING);
+            Log.w(null == tag ? TAG : tag, getTagfromCaller(getCall()) + text);
         }
     }
 
     public static void e(String text) {
         if (enable) {
-            Log.e(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + text + AFTER_STRING);
+            Log.e(null == tag ? TAG : tag, getTagfromCaller(getCall()) + text);
         }
     }
 
     public static void i(Object obj) {
         if (enable) {
-            Log.i(null == tag ? TAG : tag, PRE_STRING + getTagfromCaller(getCall()) + "\n" + obj.toString() + AFTER_STRING);
+            Log.i(null == tag ? TAG : tag, getTagfromCaller(getCall()) + obj.toString());
         }
     }
 
     private static String getTagfromCaller(StackTraceElement call) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(call.getClassName().substring(call.getClassName().lastIndexOf(".") + 1)).append(".").append(call.getMethodName()).append("中")
-                .append(call.getLineNumber()).append("行");
-        return builder.toString();
+        return call.getClassName().substring(call.getClassName().lastIndexOf(".") + 1) + "." + call.getMethodName() + "中" + call.getLineNumber() + "行";
     }
 
     private static StackTraceElement getCall() {

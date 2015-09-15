@@ -20,6 +20,8 @@ import java.util.Set;
 
 public class CacheUtil {
 
+    private static boolean showLog = false;
+
     static {
         if (!isInit()) {
             initCache(LApplication.getContext());
@@ -62,7 +64,7 @@ public class CacheUtil {
 
     public static String getString(String key) {
         if (key == null) {
-            throw new RuntimeException("key 不能为null");
+            throw new IllegalArgumentException("key 不能为null");
         }
 
         return sp.getString(key, "");
@@ -94,9 +96,20 @@ public class CacheUtil {
         } else if (value instanceof ArrayList) {
             saveListString(key, (ArrayList<String>) value);
         }
-        LLogUtils.d("保存了一个键值对" + key + "=" + value + "--- 类型是：" + value.getClass().getSimpleName());
+        if (showLog) {
+            LLogUtils.d("保存了一个键值对" + key + "=" + value + "--- 类型是：" + value.getClass().getSimpleName());
+        }
     }
 
+
+    /**
+     * 是否每次保存sp时显示日志
+     *
+     * @param show 是否显示
+     */
+    public static void setEnableLog(boolean show) {
+        CacheUtil.showLog = show;
+    }
 
     /**
      * 删除列表中的一个值,若此list不存在，返回true
@@ -152,7 +165,6 @@ public class CacheUtil {
         }
         return sp.getInt(key, DEFAULT_INT);
     }
-
 
 
     public static List<String> getStringList(String key) {
