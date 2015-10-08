@@ -2,9 +2,11 @@ package com.linwoan.library;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.linwoain.ui.LinActivity;
+import com.linwoain.library.LApplication;
+import com.linwoain.util.ScreenUtil;
 import com.linwoin.library.demo.R;
 
 /**
@@ -12,24 +14,26 @@ import com.linwoin.library.demo.R;
  * 1.继承LinActivity<br>
  * 3.设置状态栏颜色<br>
  */
-public class ChenjinActivity extends LinActivity {
+public class ChenjinActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-//        ScreenUtil.setChenjinColor(this, Color.RED);
-
+        LApplication.init(this);
+//        Translucent translucent = new Translucent(this).inject();
+//        translucent.setStatusBarColor(getResources().getColor(R.color.red));
+        ScreenUtil.setChenjinColor(this, getResources().getColor(R.color.red));
+//        ScreenUtil.setchenjin(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setChenjin();
-        setChenjinColor(Color.RED);
+
     }
 
     public void click(View v) {
-        setChenjinColor(Color.BLUE);
+        ScreenUtil.setChenjinColor(this, Color.BLUE);
     }
 }

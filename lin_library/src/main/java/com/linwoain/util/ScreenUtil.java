@@ -1,6 +1,8 @@
 package com.linwoain.util;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -9,15 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.linwoain.library.LApplication;
+import com.linwoain.library.R;
+import com.linwoain.ui.Translucent;
 
 /**
  * 获取屏幕相关参数并设置相关样式，如全屏、沉浸式...
  */
 public class ScreenUtil {
 
+
+    static {
+        LApplication.getContext();//确保框架已经初始化，防止获取状态栏错误导致的问题
+    }
+
     private static int sbar = 0;
+
 
     /**
      * 获取屏幕宽度，px
@@ -120,6 +131,7 @@ public class ScreenUtil {
             LLogUtils.e("get status bar height fail");
             e1.printStackTrace();
         }
+        LLogUtils.i(sbar);
         return sbar;
     }
 
@@ -132,22 +144,52 @@ public class ScreenUtil {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void setchenjin(Activity act) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            act.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             View root = ((ViewGroup) act.findViewById(android.R.id.content)).getChildAt(0);
-            root.setPadding(0, ScreenUtil.getStatusBarHeight(), 0, 0);
+            root.setPadding(0, getStatusBarHeight(), 0, 0);
+            act.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         }
     }
 
-    public static void setChenjinColor(Activity act,int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            act.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    private static List<Activity> acts = new ArrayList<>();
 
-            View view = act.findViewById(android.R.id.content);
-            View root = ((ViewGroup) view).getChildAt(0);
-            root.setPadding(0, ScreenUtil.getStatusBarHeight(), 0, 0);
-            view.setBackgroundColor(color);
+    /**
+     * 设置activity顶部的状态栏显示某种颜色，必须在{@link Activity#setContentView(int)}或{@link Activity#setContentView(View)}之后调用
+     * @param act 要设置的Activity
+     * @param color 设置的颜色值
+     */
+    public static void setChenjinColor(Activity act, int color) {
+
+//        Translucent translucent = new Translucent(act).inject();
+//        translucent.setStatusBarColor(color);
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            if (!acts.contains(act)) {//防止重复修改布局
+                acts.add(act);
+                ViewGroup content = (ViewGroup) act.findViewById(android.R.id.content);
+                View root = content.getChildAt(0);
+                content.removeView(root);
+                LinearLayout layout = new LinearLayout(act);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                View viewStatus = new View(act);
+                viewStatus.setId(R.id.status_bar);
+                int paddingHeight = getStatusBarHeight();
+                layout.addView(viewStatus, ViewGroup.LayoutParams.MATCH_PARENT, paddingHeight);
+                layout.addView(root, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                act.setContentView(layout);
+                act.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                viewStatus.setBackgroundColor(color);
+            } else {
+                act.findViewById(R.id.status_bar).setBackgroundColor(color);
+            }
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            setChenjinWhenLollipop(act, color);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void setChenjinWhenLollipop(Activity act, int color) {
+        act.getWindow().setStatusBarColor(color);
     }
 
     /**

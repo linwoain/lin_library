@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.linwoan.library.demo"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -22,6 +22,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.2.0'
-   compile 'com.linwoain.library:lin_library:1.0.10'
+    compile project(':lin_library')
+    compile 'com.android.support:appcompat-v7:23.0.1'
 }

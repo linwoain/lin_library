@@ -15,7 +15,9 @@ import java.lang.reflect.Field;
 /**
  * Created by wuxuejian on 2015/5/8.
  * 实现4.4以上机型的沉浸式
+ * use {@link com.linwoain.util.ScreenUtil}
  */
+@Deprecated
 public class Translucent {
 
 
@@ -27,14 +29,14 @@ public class Translucent {
     }
 
 
-    private View view = null;
+    private View viewStatus = null;
 
 
     private Translucent setTranslucent(View root) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.VERTICAL);
-            view = new View(activity);
+            viewStatus = new View(activity);
             int paddingHeight = getStatusBarHeight();
             if (activity.getActionBar() != null) {
                 //此判断用于增加状态栏高度
@@ -44,7 +46,7 @@ public class Translucent {
                 }
             }
 
-            layout.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, paddingHeight);
+            layout.addView(viewStatus, ViewGroup.LayoutParams.MATCH_PARENT, paddingHeight);
 
             layout.addView(root, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             activity.setContentView(layout);
@@ -63,21 +65,27 @@ public class Translucent {
      */
     public Translucent inject() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT&&!isInject) {
-			ViewGroup vg = (ViewGroup) activity.findViewById(android.R.id.content);
-			View layoutView = vg.getChildAt(0);
-			vg.removeView(layoutView);
-			setTranslucent(layoutView);
+			ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
+			View root = content.getChildAt(0);
+			content.removeView(root);
+			setTranslucent(root);
             isInject = true;
         }
 		return this;
     }
 
+    /**
+     * use {@link com.linwoain.util.ScreenUtil#setChenjinColor(Activity, int)}
+     * @param color  color
+     * @return
+     */
+    @Deprecated
     public Translucent setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			if (view == null) {
+			if (viewStatus == null) {
 				throw new RuntimeException("use inject() ??");
 			}
-			view.setBackgroundColor(color);
+			viewStatus.setBackgroundColor(color);
 		}
 		return this;
     }
