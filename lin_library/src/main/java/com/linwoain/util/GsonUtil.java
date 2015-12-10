@@ -21,7 +21,7 @@ public class GsonUtil {
     /**
      * @return gson instance
      */
-    public static Gson getGson() {
+    private static Gson getGson() {
         if (gson == null) {
             gson = new Gson();
         }
@@ -67,7 +67,18 @@ public class GsonUtil {
      * @param o 一个对象
      * @return json字符串
      */
+    @Deprecated
     public static String toGson(Object o) {
+        return toGsonString(o);
+    }
+
+    /**
+     * 将对象中字段转为json字符串
+     *
+     * @param o 一个对象
+     * @return json字符串
+     */
+    public static String toGsonString(Object o) {
         return getGson().toJson(o);
     }
 }

@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.HeaderViewListAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -15,8 +13,6 @@ import com.linwoain.library.LViewHelper;
 import com.linwoain.library.LinAdapter;
 import com.linwoain.library.R;
 import com.linwoain.util.ToastUtil;
-
-import java.util.List;
 
 /**
  * Created by wuxuejian on 2015/8/12.
@@ -84,7 +80,7 @@ public class LinListView extends LinearLayout implements AbsListView.OnScrollLis
     }
 
     /**
-     * 需要在界面更新代码结束后调用,如：{@link #addMore(List)}或{@link #setAdapter(LinAdapter)}之后
+     * 需要在界面更新代码结束后调用,如：{@link #setAdapter(LinAdapter)}之后
      */
     public void stopFreshing() {
         if (refresh.isRefreshing()) {
@@ -160,22 +156,7 @@ public class LinListView extends LinearLayout implements AbsListView.OnScrollLis
         lastVisiableIndex = firstVisibleItem + visibleItemCount;
     }
 
-    /**
-     * 添加更多，用于在上拉加载更多获取到数据后更新listview使用，不要使用{@link BaseAdapter#notifyDataSetChanged()}
-     *
-     * @param beans 要添加的bean的集合
-     */
-    public void addMore(List<?> beans) {
-        if (beans != null) {
-            if (beans.size() < everyPageItemCount) {
-                setNotMore();
-            }
-            ((LinAdapter) ((HeaderViewListAdapter) listView.getAdapter()).getWrappedAdapter()).addLists(beans);
-            lastAddTime = System.currentTimeMillis();
-        } else {
-            setNotMore();
-        }
-    }
+
 
     /**
      * 刷新或加载更多时的回调

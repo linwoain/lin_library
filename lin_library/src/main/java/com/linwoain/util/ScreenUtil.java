@@ -128,10 +128,8 @@ public class ScreenUtil {
             int x = Integer.parseInt(field.get(obj).toString());
             sbar = LApplication.getContext().getResources().getDimensionPixelSize(x);
         } catch (Exception e1) {
-            LLogUtils.e("get status bar height fail");
             e1.printStackTrace();
         }
-        LLogUtils.i(sbar);
         return sbar;
     }
 

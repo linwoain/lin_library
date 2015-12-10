@@ -53,7 +53,7 @@ public class PagingActivity extends LinActivity implements LinListView.OnRefresh
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                listview.addMore(getData());
+
                 listview.stopFreshing();
             }
         }, 2000);

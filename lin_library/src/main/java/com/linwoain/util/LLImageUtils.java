@@ -64,7 +64,6 @@ public class LLImageUtils {
         opts.outWidth = width;
         opts.inJustDecodeBounds = false;
 
-        LLogUtils.d("height:" + height + ",width:" + width);
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resId, opts);
         imageView.setImageBitmap(bitmap);
         LayoutParams params = imageView.getLayoutParams();

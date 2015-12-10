@@ -70,45 +70,7 @@ public abstract class LinAdapter<T> extends BaseAdapter {
      */
     protected abstract View LgetView(int position, View convertView, ViewGroup parent);
 
-    /**
-     * 添加一些条目到列表中
-     *
-     * @param lists 新增的条目
-     */
-    public void addLists(List<T> lists) {
-        beans.addAll(lists);
-        notifyDataSetChanged();
-    }
 
-    /**
-     * 清空所有条目
-     */
-    public void clearAll() {
-        beans.clear();
-        notifyDataSetChanged();
-    }
-
-    /**
-     * 清空并重新加载所有新传入的数据
-     *
-     * @param lists 重新加载lists
-     */
-    public void refresh(List<T> lists) {
-        beans.clear();
-        beans.addAll(lists);
-        notifyDataSetChanged();
-
-    }
-
-    /**
-     * 添加一条新的条目
-     *
-     * @param item 新增的条目
-     */
-    public void add(T item) {
-        beans.add(item);
-        notifyDataSetChanged();
-    }
 
     public static class ViewHolders {
 

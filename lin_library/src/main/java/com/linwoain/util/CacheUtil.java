@@ -22,38 +22,14 @@ public class CacheUtil {
 
     private static boolean showLog = false;
 
-    static {
-        if (!isInit()) {
-            initCache(LApplication.getContext());
-        }
-    }
 
-    private static SharedPreferences sp;
-    private static boolean isInitBoolean;
+    private static SharedPreferences sp = LApplication.getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
     /**
      * 数值类型的默认返回值，int、float、long<br>
      * 默认为-5927
      */
     public static final int DEFAULT_INT = -5927;
 
-    /**
-     * 初始化方法,无须使用此方法，在静态代码块中已经初始化
-     *
-     * @param context
-     */
-    private static void initCache(Context context) {
-        sp = context.getApplicationContext().getSharedPreferences("config", Context.MODE_PRIVATE);
-        isInitBoolean = true;
-    }
-
-    /**
-     * 获取缓存工具的状态
-     *
-     * @return 是否初始化完成
-     */
-    public static boolean isInit() {
-        return isInitBoolean;
-    }
 
     /**
      * 获取一个值,若未找到，则返回空字符串

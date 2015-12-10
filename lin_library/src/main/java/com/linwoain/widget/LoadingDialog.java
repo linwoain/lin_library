@@ -1,6 +1,7 @@
 package com.linwoain.widget;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.linwoain.library.R;
+import com.linwoain.util.LLogUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 正在加载中对话框
@@ -25,20 +30,11 @@ public class LoadingDialog extends AlertDialog {
 
     public LoadingDialog(Context context) {
         super(context);
-        setCancelable(false);
     }
 
     public LoadingDialog(Context context, String text) {
         super(context);
         this.text = text;
-        setCancelable(false);
-    }
-
-    public void setText(String text) {
-        this.text = text;
-        if (text != null) {
-            tv.setText(text);
-        }
     }
 
     @Override
@@ -49,25 +45,48 @@ public class LoadingDialog extends AlertDialog {
         if (text != null && tv != null) {
             tv.setText(text);
         }
-//        FrameLayout view = (FrameLayout) findViewById(android.R.id.content);
-//        FrameLayout.LayoutParams parame= (FrameLayout.LayoutParams) view.getLayoutParams();
-//        parame.height= ViewGroup.LayoutParams.WRAP_CONTENT;
-//        parame.width= ViewGroup.LayoutParams.WRAP_CONTENT;
-//        view.setLayoutParams(parame);
 
     }
 
-    /**
-     * 如果已显示则关闭，否则显示
-     *
-     * @author: linwoain
-     * @version: 2014年8月26日 下午3:32:30
-     */
-    public void toggle() {
-        if (this.isShowing()) {
-            this.dismiss();
-        } else {
-            this.show();
+    @Override
+    public void show() {
+        super.show();
+        timer.schedule(task, overtime * 1000);
+
+    }
+
+    private static TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            dismissDialog();
+            LLogUtils.e("dialog显示超过了" + overtime + "秒,自动关闭，通过setOverTime可设置超时时间");
+
         }
+    };
+    private static LoadingDialog dialog;
+
+    public static void showDialog(Activity act, String text) {
+        dialog = new LoadingDialog(act, text);
+        dialog.show();
+    }
+
+    private static Timer timer = new Timer();
+
+    private static int overtime = 10;
+
+    public static void setOverTime(int timeOut) {
+        overtime = timeOut;
+    }
+
+    public static void dismissDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        timer.cancel();
     }
 }

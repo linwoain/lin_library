@@ -108,7 +108,7 @@ public class LLogUtils {
     }
 
     private static String getTagfromCaller(StackTraceElement call) {
-        return call.getClassName().substring(call.getClassName().lastIndexOf(".") + 1) + "." + call.getMethodName() + "中" + call.getLineNumber() + "行";
+        return call.getClassName().substring(call.getClassName().lastIndexOf(".") + 1) + "." + call.getMethodName() + "中" + call.getLineNumber() + "行\n";
     }
 
     private static StackTraceElement getCall() {
