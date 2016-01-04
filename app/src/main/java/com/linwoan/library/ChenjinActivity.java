@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.linwoain.library.LApplication;
+import com.linwoain.util.LLogUtils;
 import com.linwoain.util.Once;
 import com.linwoain.util.ScreenUtil;
 import com.linwoain.util.ToastUtil;
@@ -31,6 +32,8 @@ public class ChenjinActivity extends AppCompatActivity {
                 ToastUtil.show("这个只会展示一次");
             }
         });
+        LLogUtils.i(AppConfig.TEST_ABOUT);
+        LLogUtils.i(AppConfig.TEST_DFLDNFIETG);
     }
 
 

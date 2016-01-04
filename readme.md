@@ -1,7 +1,7 @@
 #两句话实现沉浸式（API>=19)
 ##一、使用gradle 加载依赖
 ```gradle
-compile 'com.linwoain.library:lin_library:1.1.0'
+compile 'com.linwoain.library:lin_library:1.1.1'
 ```
 或者下载相应文件夹下的java文件
 
@@ -18,3 +18,4 @@ compile 'com.linwoain.library:lin_library:1.1.0'
 ##1.0.11 取消了CacheUtil中每次保存sharedpreference时默认打印log
 ##1.0.12 使用ScreenUtil完全替代Translucent
 ##1.1.0 增加了Once类
+##1.1.1 增加了常量注解
