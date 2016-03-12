@@ -1,26 +1,10 @@
 # 两句话实现沉浸式（API>=19)
 ## 一、使用gradle 加载依赖
 
- 1. 在根路径下的`build.gradle`中添加：
-
-```gradle
-
-allprojects {
-    repositories {
-        jcenter()
-        maven {
-            url "https://jitpack.io"
-        }
-    }
-}
-
-```
-
- 2. 在app下的`build.gradle`中添加：
 
 ```gradle
 dependencies {
-	        compile 'com.github.linwoain:lin_library:1.1.2'
+	        compile 'com.linwoain.library:lin_library:1.1.2'
 	}
 ```
 或者下载相应文件夹下的java文件
