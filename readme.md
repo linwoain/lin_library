@@ -1,11 +1,29 @@
-#两句话实现沉浸式（API>=19)
-##一、使用gradle 加载依赖
+# 两句话实现沉浸式（API>=19)
+## 一、使用gradle 加载依赖
+
+> 1. 在根路径下的`build.gradle`中添加：
 ```gradle
-compile 'com.linwoain.library:lin_library:1.1.1'
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+}
+
+```
+> 2. 在app下的`build.gradle`中添加：
+
+```gradle
+dependencies {
+	        compile 'com.github.linwoain:lin_library:1.1.1'
+	}
 ```
 或者下载相应文件夹下的java文件
 
-##二、使用ScreenUtil类实现
+## 二、使用ScreenUtil类实现
 
 ```java
 
@@ -13,9 +31,10 @@ compile 'com.linwoain.library:lin_library:1.1.1'
 ```
 
 
-##1.0.9 修复了检测root权限错误问题
-##1.0.10 修改了LinListView使用v4包刷新与上拉加载更多
-##1.0.11 取消了CacheUtil中每次保存sharedpreference时默认打印log
-##1.0.12 使用ScreenUtil完全替代Translucent
-##1.1.0 增加了Once类
-##1.1.1 增加了常量注解
+## 1.0.9 修复了检测root权限错误问题
+## 1.0.10 修改了LinListView使用v4包刷新与上拉加载更多
+## 1.0.11 取消了CacheUtil中每次保存sharedpreference时默认打印log
+## 1.0.12 使用ScreenUtil完全替代Translucent
+## 1.1.0 增加了Once类
+## 1.1.1 增加了常量注解
+## 1.1.2 修复了沉浸式的某些问题

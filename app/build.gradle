@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.linwoan.library.demo"

@@ -161,7 +161,7 @@ public class ScreenUtil {
 //        Translucent translucent = new Translucent(act).inject();
 //        translucent.setStatusBarColor(color);
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (!acts.contains(act)) {//防止重复修改布局
                 acts.add(act);
                 ViewGroup content = (ViewGroup) act.findViewById(android.R.id.content);
@@ -180,8 +180,6 @@ public class ScreenUtil {
             } else {
                 act.findViewById(R.id.status_bar).setBackgroundColor(color);
             }
-        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            setChenjinWhenLollipop(act, color);
         }
     }
 
