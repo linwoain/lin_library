@@ -7,6 +7,7 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -149,7 +150,7 @@ public class ScreenUtil {
         }
     }
 
-    private static List<Activity> acts = new ArrayList<>();
+    private static List<Integer> acts = new ArrayList<>();
 
     /**
      * 设置activity顶部的状态栏显示某种颜色，必须在{@link Activity#setContentView(int)}或{@link Activity#setContentView(View)}之后调用
@@ -162,8 +163,8 @@ public class ScreenUtil {
 //        translucent.setStatusBarColor(color);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!acts.contains(act)) {//防止重复修改布局
-                acts.add(act);
+            if (!acts.contains(act.hashCode())) {//防止重复修改布局
+                acts.add(act.hashCode());
                 ViewGroup content = (ViewGroup) act.findViewById(android.R.id.content);
                 View root = content.getChildAt(0);
                 content.removeView(root);
